@@ -1,0 +1,133 @@
+.wrap {
+    display: flex;
+}
+
+.product-wrap {
+    padding-left: 10px;
+    width: 452px;
+    height: 550px;
+    border: 1px #000 solid;
+    overflow: auto;
+    box-sizing: border-box;
+}
+
+.product-wrap::-webkit-scrollbar {
+    display: none;
+}
+
+.product-list>li {
+    width: 100px;
+    height: 60px;
+    float: left;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 10px 35px 0;
+    border: 1px #000 solid;
+    box-sizing: border-box;
+}
+
+.product-index {
+    position: absolute;
+    left: 1px;
+    top: 1px;
+}
+
+.product-price {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -20px;
+}
+
+.product-select-wrap {
+    width: 441px;
+    height: 550px;
+    border: 1px #000 solid;
+    border-left: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.product-select-info-wrap {
+    display: flex;
+    line-height: 40px;
+    margin-bottom: 30px;
+}
+
+.selected-product-number-wrap {
+    margin-right: 10px;
+    width: 100px;
+    border: 1px #000 solid;
+    text-align: right;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.insert-cash-wrap {
+    width: 260px;
+    border: 1px #000 solid;
+    text-align: right;
+    box-sizing: border-box;
+}
+
+.cash-unit {
+    margin-right: 20px;
+}
+
+.product-select-btns {
+    display: flex;
+    width: 370px;
+    height: 200px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.product-select-btns>button {
+    width: 100px;
+    height: 40px;
+}
+
+.product-select-log {
+    width: 370px;
+    height: 250px;
+    border: 1px #000 solid;
+    padding: 10px;
+    box-sizing: border-box;
+    line-height: 20px;
+    overflow: auto;
+}
+
+.wallet-wrap {
+    width: 200px;
+    height: 550px;
+    border: 1px #000 solid;
+    border-left: none;
+    box-sizing: border-box;
+    padding: 0 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.wallet-btns {
+    height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.wallet-btns button {
+    width: 80px;
+    height: 35px;
+}
