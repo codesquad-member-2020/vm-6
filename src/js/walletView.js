@@ -20,6 +20,7 @@ class WalletView {
 
     eventHandler(evt) {
         this.vmModel.sumInsertCash(evt);
+        this.vmModel.productHighlight();
         this.walletModel.cashCountDecrease(evt);
     }
 

@@ -29,6 +29,10 @@
     box-sizing: border-box;
 }
 
+.product-list>li.on {
+    border: 1px #f00 solid;
+}
+
 .product-index {
     position: absolute;
     left: 1px;
@@ -61,7 +65,7 @@
     margin-bottom: 30px;
 }
 
-.selected-product-number-wrap {
+.selected-product-index-wrap {
     margin-right: 10px;
     width: 100px;
     border: 1px #000 solid;
