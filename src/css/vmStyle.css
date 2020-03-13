@@ -27,6 +27,11 @@
     margin: 10px 10px 35px 0;
     border: 1px #000 solid;
     box-sizing: border-box;
+    cursor: pointer;
+}
+
+.product-list>li.on {
+    border: 1.5px #f00 solid;
 }
 
 .product-index {
@@ -61,7 +66,7 @@
     margin-bottom: 30px;
 }
 
-.selected-product-number-wrap {
+.selected-product-index-wrap {
     margin-right: 10px;
     width: 100px;
     border: 1px #000 solid;
@@ -70,7 +75,7 @@
     text-align: center;
 }
 
-.insert-cash-wrap {
+.inserted-cash-wrap {
     width: 260px;
     border: 1px #000 solid;
     text-align: right;
