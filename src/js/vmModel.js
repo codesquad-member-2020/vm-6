@@ -1,54 +1,73 @@
 import Observable from "./observable.js";
-import { vm$, vm$$, classAdd, classRemove } from "./util.js";
+import { vm$$ } from "./util.js";
 
 const OPTION = {
-    PRODUCT_LENGTH: 20
+    PRODUCT_LENGTH: 20,
+    PRODUCT_INDEX: 0,
+    PRODUCT_NAME_INDEX: 1,
+    PRODUCT_PRICE_INDEX: 2,
+    DEFAULT_PRODUCT_INDEX: "0"
 }
 
 class VmModel extends Observable {
     constructor() {
         super();
-        this.insertCash = 0;
-        this.selectedProductIndex = "0";
+        this.insertedCash = 0;
+        this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
     }
 
-    sumInsertCash({ target }) {
+    sumInsertedCash({ target }) {
         if (target.tagName !== "BUTTON") return
         if (parseInt(target.nextElementSibling.innerText) === 0) return
-        this.insertCash += parseInt(target.value);
-        this.notify({ insertCash: this.insertCash, value: target.value });
+        this.insertedCash += parseInt(target.value);
+        this.notify({ insertedCash: this.insertedCash, value: target.value });
     }
-
 
     addSelectedProductIndex({ target }) {
         if (target.tagName !== "BUTTON") return
         if (this.selectedProductIndex + target.value > OPTION.PRODUCT_LENGTH) return
         switch (target.value) {
-            case "reset": this.selectedProductIndex = "0";
+            case "reset": {
+                this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
+                this.notify({ index: this.selectedProductIndex });
+            }
                 break;
             case "choice": {
-                const productList = vm$$(".product-list li");
-                console.log(productList);
-                this.selectedProductIndex = "0";
-                this.insertCash = 0;
+                if (this.selectedProductIndex === OPTION.DEFAULT_PRODUCT_INDEX) return
+                this.notifySelectedProduct();
             }
                 break;
             default: {
                 this.selectedProductIndex += target.value;
-            }
+                this.notify({ index: this.selectedProductIndex });
+            };
         }
-        this.notify({ index: this.selectedProductIndex });
     }
 
-    productHighlight() {
-        const productPrice = vm$$(".product-price");
-        Array.from(productPrice).forEach(priceNode => {
-            if (parseInt(priceNode.innerText) <= this.insertCash) {
-                classAdd(priceNode.parentElement, "on");
-            } else if (priceNode.parentElement.classList.contains("on")) {
-                classRemove(priceNode.parentElement, "on");
-            }
-        });
+    selectProduct({ target }) {
+        if (target.tagName === "SPAN") target = target.parentElement;
+        if (target.tagName !== "LI") return
+        this.selectedProductIndex = parseInt(target.children[OPTION.PRODUCT_INDEX].innerText);
+        this.notifySelectedProduct();
+    }
+
+    searchProduct() {
+        const productList = vm$$(".product-list li");
+        return {
+            name: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_NAME_INDEX].innerText,
+            price: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_PRICE_INDEX].innerText
+        }
+    }
+
+    notifySelectedProduct() {
+        const productInfo = this.searchProduct();
+        this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
+        if (productInfo.price > this.insertedCash) {
+            this.notify({ index: this.selectedProductIndex, bCashNotEnough: true });
+            return
+        }
+        this.insertedCash -= productInfo.price;
+        this.notify({ insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
     }
 }
 

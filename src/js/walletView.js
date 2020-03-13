@@ -10,17 +10,16 @@ class WalletView {
     }
 
     init() {
-        this.eventRegister();
+        this.registerEvent();
     }
 
-    eventRegister() {
+    registerEvent() {
         const walletBtns = vm$('.wallet-btns');
         walletBtns.addEventListener("click", this.eventHandler.bind(this));
     }
 
     eventHandler(evt) {
-        this.vmModel.sumInsertCash(evt);
-        this.vmModel.productHighlight();
+        this.vmModel.sumInsertedCash(evt);
         this.walletModel.cashCountDecrease(evt);
     }
 
