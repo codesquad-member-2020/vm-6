@@ -27,21 +27,21 @@ class ProductSelectView {
         this.vmModel.addSelectedProductIndex(evt);
     }
 
-    render({ index, insertedCash, value, product, bCashNotEnough }) {
+    render({ insertedCash, index, value, product, bCashNotEnough }) {
         if (insertedCash >= 0) this.insertedCash.innerHTML = insertedCash;
+        if (index) this.selectedProductIndex.innerHTML = parseInt(index);
         if (value) {
-            this.productSelectLog.innerHTML += `${value}원 투입<br>`;
+            this.productSelectLog.innerHTML += `${value}원 투입 됐습니다.<br>`;
             this.productSelectLog.scrollTop += OPTION.SCROLL_UNIT;
         }
         if (product) {
-            this.productSelectLog.innerHTML += `${product} 선택<br>`;
+            this.productSelectLog.innerHTML += `< ${product} > 선택 됐습니다.<br>`;
             this.productSelectLog.scrollTop += OPTION.SCROLL_UNIT;
         }
         if (bCashNotEnough) {
-            this.productSelectLog.innerHTML += `잔액 부족<br>`;
+            this.productSelectLog.innerHTML += `잔액이 부족 합니다.<br>`;
             this.productSelectLog.scrollTop += OPTION.SCROLL_UNIT;
         }
-        if (index) this.selectedProductIndex.innerHTML = parseInt(index);
     }
 }
 

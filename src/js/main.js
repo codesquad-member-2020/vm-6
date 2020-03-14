@@ -7,6 +7,7 @@ import ProductView from "./productView.js";
 (function main() {
     const walletModel = new WalletModel();
     const vmModel = new VmModel();
+
     new WalletView(walletModel, vmModel);
     new ProductSelectView(vmModel);
     new ProductView(vmModel);
