@@ -23,11 +23,8 @@ class ProductView {
     render() {
         const productPrice = vm$$(".product-price");
         Array.from(productPrice).forEach(priceNode => {
-            if (parseInt(priceNode.innerText) <= this.vmModel.insertedCash) {
-                classAdd(priceNode.parentElement, "on");
-            } else if (priceNode.parentElement.classList.contains("on")) {
-                classRemove(priceNode.parentElement, "on");
-            }
+            if (parseInt(priceNode.innerText) <= this.vmModel.insertedCash) classAdd(priceNode.parentElement, "on");
+            else if (priceNode.parentElement.classList.contains("on")) classRemove(priceNode.parentElement, "on");
         });
     }
 }

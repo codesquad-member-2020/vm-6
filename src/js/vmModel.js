@@ -20,7 +20,7 @@ class VmModel extends Observable {
         if (target.tagName !== "BUTTON") return
         if (parseInt(target.nextElementSibling.innerText) === 0) return
         this.insertedCash += parseInt(target.value);
-        this.notify({ insertedCash: this.insertedCash, value: target.value });
+        this.notify({ insertedCash: this.insertedCash, cash: target.value });
     }
 
     addSelectedProductIndex({ target }) {
