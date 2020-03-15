@@ -27,12 +27,12 @@ class WalletModel extends Observable {
     }
 
     cashCountDecrease({ target }) {
-        if (target.tagName !== "BUTTON") return
+        if (target.tagName !== "BUTTON") return;
         let curCount = this.cash.get(parseInt(target.value));
-        if (curCount <= 0) return
+        if (curCount <= 0) return;
         this.cash.set(parseInt(target.value), --curCount);
         this.cashTotal -= target.value;
-        this.notify(this.cash.get(parseInt(target.value)), target.nextElementSibling, this.cashTotal);
+        this.notify("changeCashInfo", this.cash.get(parseInt(target.value)), target.nextElementSibling, this.cashTotal);
     }
 }
 

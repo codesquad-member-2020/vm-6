@@ -3,7 +3,7 @@ import { vm$, vm$$, classAdd, classRemove } from "./util.js";
 class ProductView {
     constructor(vmModel) {
         this.vmModel = vmModel;
-        this.vmModel.subscribe(this.render.bind(this));
+        this.vmModel.subscribe("changeCashInfo", this.changeCashInfoRender.bind(this));
         this.init();
     }
 
@@ -20,7 +20,7 @@ class ProductView {
         this.vmModel.selectProduct(evt);
     }
 
-    render() {
+    changeCashInfoRender() {
         const productPrice = vm$$(".product-price");
         Array.from(productPrice).forEach(priceNode => {
             if (parseInt(priceNode.innerText) <= this.vmModel.insertedCash) classAdd(priceNode.parentElement, "on");

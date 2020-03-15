@@ -17,36 +17,36 @@ class VmModel extends Observable {
     }
 
     sumInsertedCash({ target }) {
-        if (target.tagName !== "BUTTON") return
-        if (parseInt(target.nextElementSibling.innerText) === 0) return
+        if (target.tagName !== "BUTTON") return;
+        if (parseInt(target.nextElementSibling.innerText) === 0) return;
         this.insertedCash += parseInt(target.value);
-        this.notify({ insertedCash: this.insertedCash, cash: target.value });
+        this.notify("changeCashInfo", { insertedCash: this.insertedCash, cash: target.value });
     }
 
     addSelectedProductIndex({ target }) {
-        if (target.tagName !== "BUTTON") return
-        if (this.selectedProductIndex + target.value > OPTION.PRODUCT_LENGTH) return
+        if (target.tagName !== "BUTTON") return;
+        if (this.selectedProductIndex + target.value > OPTION.PRODUCT_LENGTH) return;
         switch (target.value) {
             case "reset": {
                 this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
-                this.notify({ index: this.selectedProductIndex });
+                this.notify("selectProduct", this.selectedProductIndex);
             }
                 break;
             case "choice": {
-                if (this.selectedProductIndex === OPTION.DEFAULT_PRODUCT_INDEX) return
+                if (this.selectedProductIndex === OPTION.DEFAULT_PRODUCT_INDEX) return;
                 this.notifySelectedProduct();
             }
                 break;
             default: {
                 this.selectedProductIndex += target.value;
-                this.notify({ index: this.selectedProductIndex });
+                this.notify("selectProduct", this.selectedProductIndex);
             };
         }
     }
 
     selectProduct({ target }) {
         if (target.tagName === "SPAN") target = target.parentElement;
-        if (target.tagName !== "LI") return
+        if (target.tagName !== "LI") return;
         this.selectedProductIndex = parseInt(target.children[OPTION.PRODUCT_INDEX].innerText);
         this.notifySelectedProduct();
     }
@@ -62,12 +62,14 @@ class VmModel extends Observable {
     notifySelectedProduct() {
         const productInfo = this.searchProduct();
         this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
+        this.notify("selectProduct", this.selectedProductIndex);
         if (productInfo.price > this.insertedCash) {
-            this.notify({ index: this.selectedProductIndex, bCashNotEnough: true });
-            return
+            this.notify("purchaseProduct", { bCashNotEnough: true });
+            return;
         }
         this.insertedCash -= productInfo.price;
-        this.notify({ insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
+        this.notify("purchaseProduct", { insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
+        this.notify("changeCashInfo", { bLogRender: false });
     }
 }
 
