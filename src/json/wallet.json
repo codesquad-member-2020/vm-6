@@ -1,9 +1,30 @@
-{
-    "10": 10,
-    "50": 15,
-    "100": 12,
-    "500": 8,
-    "1000": 6,
-    "5000": 3,
-    "10000": 2
-}
+[
+    {
+        "cashUnit": "10",
+        "cashCount": 10
+    },
+    {
+        "cashUnit": "50",
+        "cashCount": 15
+    },
+    {
+        "cashUnit": "100",
+        "cashCount": 12
+    },
+    {
+        "cashUnit": "500",
+        "cashCount": 8
+    },
+    {
+        "cashUnit": "1000",
+        "cashCount": 6
+    },
+    {
+        "cashUnit": "5000",
+        "cashCount": 3
+    },
+    {
+        "cashUnit": "10000",
+        "cashCount": 2
+    }
+]

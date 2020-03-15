@@ -8,7 +8,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/vm/products', (req, res) => {
+app.get('/vm/product', (req, res) => {
   res.send(productJSON);
 });
 app.get('/vm/wallet', (req, res) => {

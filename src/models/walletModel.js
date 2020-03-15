@@ -3,26 +3,27 @@ import Observable from "../util/observable.js";
 class WalletModel extends Observable {
     constructor() {
         super();
+        this.walletData = null
         this.cash = new Map();
-        this.cash.set(10, 0);
-        this.cash.set(50, 1);
-        this.cash.set(100, 5);
-        this.cash.set(500, 5);
-        this.cash.set(1000, 2);
-        this.cash.set(5000, 2);
-        this.cash.set(10000, 1);
         this.cashTotal = 0;
         this.init();
     }
 
     init() {
-        this.calculateTotalCash();
+        this.getData("http://localhost:8080/vm/wallet");
     }
 
-    calculateTotalCash() {
-        this.cashTotal = 0;
-        this.cash.forEach((cashCount, cashUnit) => {
-            this.cashTotal += cashCount * cashUnit;
+    async getData(url) {
+        const response = await fetch(url);
+        this.walletData = await response.json();
+        this.setCashInfo(this.walletData);
+        this.notify("init", this.walletData);
+    }
+
+    setCashInfo(data) {
+        data.forEach(cashInfo => {
+            this.cashTotal += (cashInfo.cashUnit * cashInfo.cashCount);
+            this.cash.set(parseInt(cashInfo.cashUnit), cashInfo.cashCount);
         });
     }
 

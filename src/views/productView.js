@@ -1,26 +1,26 @@
 import { vm$, vm$$, classAdd, classRemove } from "../util/util.js";
+import { productPanel } from "../util/template.js";
 
 class ProductView {
     constructor(vmModel) {
         this.vmModel = vmModel;
-        this.vmModel.subscribe("changeCashInfo", this.highlightProductUpdate.bind(this));
-        this.init();
+        this.vmModel.subscribe("changeCashInfo", this.productUpdate.bind(this));
+        this.vmModel.subscribe("init", this.render.bind(this));
     }
 
-    init() {
-        this.registerEvent();
-    }
+    render(data) {
+        const productWrap = vm$(".product-wrap");
+        productWrap.innerHTML = productPanel(data);
 
-    registerEvent() {
         const productList = vm$('.product-list');
-        productList.addEventListener("click", this.eventHandler.bind(this));
+        productList.addEventListener("click", this.productListHandler.bind(this));
     }
 
-    eventHandler(evt) {
+    productListHandler(evt) {
         this.vmModel.selectProduct(evt);
     }
 
-    highlightProductUpdate() {
+    productUpdate() {
         const productPrice = vm$$(".product-price");
         Array.from(productPrice).forEach(priceNode => {
             if (parseInt(priceNode.innerText) <= this.vmModel.insertedCash) classAdd(priceNode.parentElement, "on");

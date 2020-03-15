@@ -1,19 +1,18 @@
 import { vm$ } from "../util/util.js";
+import { walletPanel } from "../util/template.js";
 
 class WalletView {
     constructor(walletModel, vmModel) {
-        this.total = vm$('.wallet-cash-total');
         this.walletModel = walletModel;
         this.vmModel = vmModel;
         this.walletModel.subscribe("changeCashInfo", this.cashInfoUpdate.bind(this));
-        this.init();
+        this.walletModel.subscribe("init", this.render.bind(this));
     }
 
-    init() {
-        this.registerEvent();
-    }
+    render(data) {
+        const walletWrap = vm$(".wallet-wrap");
+        walletWrap.innerHTML = walletPanel(data);
 
-    registerEvent() {
         const walletBtns = vm$('.wallet-btns');
         walletBtns.addEventListener("click", this.eventHandler.bind(this));
     }
@@ -24,6 +23,7 @@ class WalletView {
     }
 
     cashInfoUpdate(data, target, cash_total) {
+        this.total = vm$('.wallet-cash-total');
         target.innerHTML = data;
         this.total.innerHTML = cash_total;
     }
