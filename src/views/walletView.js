@@ -1,4 +1,4 @@
-import { vm$ } from "./util.js";
+import { vm$ } from "../util/util.js";
 
 class WalletView {
     constructor(walletModel, vmModel) {

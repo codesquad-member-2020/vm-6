@@ -1,4 +1,4 @@
-import { vm$, vm$$, classAdd, classRemove } from "./util.js";
+import { vm$, vm$$, classAdd, classRemove } from "../util/util.js";
 
 class ProductView {
     constructor(vmModel) {

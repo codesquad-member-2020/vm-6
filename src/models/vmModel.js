@@ -1,5 +1,5 @@
-import Observable from "./observable.js";
-import { vm$$ } from "./util.js";
+import Observable from "../util/observable.js";
+import { vm$$ } from "../util/util.js";
 
 const OPTION = {
     PRODUCT_LENGTH: 20,
