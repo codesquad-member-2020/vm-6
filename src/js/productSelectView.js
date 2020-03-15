@@ -6,9 +6,9 @@ class ProductSelectView {
         this.selectedProductIndex = vm$(".selected-product-index");
         this.productSelectLog = vm$(".product-select-log");
         this.vmModel = vmModel;
-        this.vmModel.subscribe("changeCashInfo", this.changeCashInfoRender.bind(this));
-        this.vmModel.subscribe("selectProduct", this.selectProductRender.bind(this));
-        this.vmModel.subscribe("purchaseProduct", this.purchaseProductRender.bind(this));
+        this.vmModel.subscribe("changeCashInfo", this.insertedCashUpdate.bind(this));
+        this.vmModel.subscribe("selectProduct", this.selectIndexUpdate.bind(this));
+        this.vmModel.subscribe("purchaseProduct", this.selectProductUpdate.bind(this));
         this.init();
     }
 
@@ -31,18 +31,18 @@ class ProductSelectView {
         return log_li;
     }
 
-    changeCashInfoRender({ bLogRender = true, insertedCash, cash }) {
+    insertedCashUpdate({ bLogRender = true, insertedCash, cash }) {
         if (!bLogRender) return;
         this.insertedCash.innerHTML = insertedCash;
         this.productSelectLog.appendChild(this.makeLog(`${cash}원 투입 됐습니다.`));
         this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
     }
 
-    selectProductRender(index) {
+    selectIndexUpdate(index) {
         this.selectedProductIndex.innerHTML = parseInt(index);
     }
 
-    purchaseProductRender({ bCashNotEnough = false, insertedCash, product }) {
+    selectProductUpdate({ bCashNotEnough = false, insertedCash, product }) {
         if (bCashNotEnough) this.productSelectLog.appendChild(this.makeLog(`잔액이 부족 합니다.`));
         else {
             this.insertedCash.innerHTML = insertedCash;

@@ -5,7 +5,7 @@ class WalletView {
         this.total = vm$('.wallet-cash-total');
         this.walletModel = walletModel;
         this.vmModel = vmModel;
-        this.walletModel.subscribe("changeCashInfo", this.changeCashInfoRender.bind(this));
+        this.walletModel.subscribe("changeCashInfo", this.cashInfoUpdate.bind(this));
         this.init();
     }
 
@@ -23,7 +23,7 @@ class WalletView {
         this.walletModel.cashCountDecrease(evt);
     }
 
-    changeCashInfoRender(data, target, cash_total) {
+    cashInfoUpdate(data, target, cash_total) {
         target.innerHTML = data;
         this.total.innerHTML = cash_total;
     }
