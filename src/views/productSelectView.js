@@ -1,11 +1,11 @@
-import { vm$ } from "../util/util.js";
+import { getElement } from "../util/util.js";
 import { productSelectPanel } from "../util/template.js";
 
 class ProductSelectView {
     constructor(vmModel) {
         this.render();
-        this.insertedCash = vm$(".inserted-cash");
-        this.productSelectLog = vm$(".product-select-log");
+        this.insertedCash = getElement(".inserted-cash");
+        this.productSelectLog = getElement(".product-select-log");
         this.vmModel = vmModel;
         this.vmModel.subscribe("changeCashInfo", this.insertedCashUpdate.bind(this));
         this.vmModel.subscribe("selectProduct", this.selectIndexUpdate.bind(this));
@@ -13,10 +13,10 @@ class ProductSelectView {
     }
 
     render() {
-        const productSelectWrap = vm$(".product-select-wrap");
+        const productSelectWrap = getElement(".product-select-wrap");
         productSelectWrap.innerHTML = productSelectPanel();
 
-        const productSelectBtns = vm$('.product-select-btns');
+        const productSelectBtns = getElement('.product-select-btns');
         productSelectBtns.addEventListener("click", this.productSelectBtnsHandler.bind(this));
     }
 
@@ -38,7 +38,7 @@ class ProductSelectView {
     }
 
     selectIndexUpdate(index) {
-        this.selectedProductIndex = vm$(".selected-product-index");
+        this.selectedProductIndex = getElement(".selected-product-index");
         this.selectedProductIndex.innerHTML = parseInt(index);
     }
 

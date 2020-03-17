@@ -1,5 +1,5 @@
 import Observable from "../util/observable.js";
-import { vm$$ } from "../util/util.js";
+import { getElements } from "../util/util.js";
 
 const OPTION = {
     PRODUCT_LENGTH: 20,
@@ -9,7 +9,7 @@ const OPTION = {
     DEFAULT_PRODUCT_INDEX: "0"
 }
 
-class VmModel extends Observable {
+class VendingMachineModel extends Observable {
     constructor() {
         super();
         this.productData = null;
@@ -64,7 +64,7 @@ class VmModel extends Observable {
     }
 
     searchProduct() {
-        const productList = vm$$(".product-list li");
+        const productList = getElements(".product-list li");
         return {
             name: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_NAME_INDEX].innerText,
             price: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_PRICE_INDEX].innerText
@@ -85,4 +85,4 @@ class VmModel extends Observable {
     }
 }
 
-export default VmModel;
+export default VendingMachineModel;

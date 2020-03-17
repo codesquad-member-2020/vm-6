@@ -1,4 +1,4 @@
-import { vm$, vm$$, classAdd, classRemove } from "../util/util.js";
+import { getElement, getElements, classAdd, classRemove } from "../util/util.js";
 import { productPanel } from "../util/template.js";
 
 class ProductView {
@@ -9,10 +9,10 @@ class ProductView {
     }
 
     render(data) {
-        const productWrap = vm$(".product-wrap");
+        const productWrap = getElement(".product-wrap");
         productWrap.innerHTML = productPanel(data);
 
-        const productList = vm$('.product-list');
+        const productList = getElement('.product-list');
         productList.addEventListener("click", this.productListHandler.bind(this));
     }
 
@@ -21,7 +21,7 @@ class ProductView {
     }
 
     productUpdate() {
-        const productPrice = vm$$(".product-price");
+        const productPrice = getElements(".product-price");
         Array.from(productPrice).forEach(priceNode => {
             if (parseInt(priceNode.innerText) <= this.vmModel.insertedCash) classAdd(priceNode.parentElement, "on");
             else if (priceNode.parentElement.classList.contains("on")) classRemove(priceNode.parentElement, "on");
