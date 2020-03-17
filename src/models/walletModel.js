@@ -1,4 +1,5 @@
-import Observable from "../util/observable.js";
+import Observable from '../util/observable.js';
+import URL from '../util/url.js';
 
 class WalletModel extends Observable {
     constructor() {
@@ -10,14 +11,14 @@ class WalletModel extends Observable {
     }
 
     init() {
-        this.getData("http://localhost:8080/vm/wallet");
+        this.getData(URL.DEV.WALLET_DATA);
     }
 
     async getData(url) {
         const response = await fetch(url);
         this.walletData = await response.json();
         this.setCashInfo(this.walletData);
-        this.notify("init", this.walletData);
+        this.notify('init', this.walletData);
     }
 
     setCashInfo(data) {
@@ -27,13 +28,13 @@ class WalletModel extends Observable {
         });
     }
 
-    cashCountDecrease({ target }) {
-        if (target.tagName !== "BUTTON") return;
+    decreaseCashCount({ target }) {
+        if (target.tagName !== 'BUTTON') return;
         let curCount = this.cash.get(parseInt(target.value));
         if (curCount <= 0) return;
         this.cash.set(parseInt(target.value), --curCount);
         this.cashTotal -= target.value;
-        this.notify("changeCashInfo", this.cash.get(parseInt(target.value)), target.nextElementSibling, this.cashTotal);
+        this.notify('changeCashInfo', this.cash.get(parseInt(target.value)), target.nextElementSibling, this.cashTotal);
     }
 }
 
