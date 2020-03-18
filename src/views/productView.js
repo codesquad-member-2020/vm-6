@@ -8,7 +8,7 @@ const OPTION = {
 class ProductView {
     constructor(vendingMachineModel) {
         this.vendingMachineModel = vendingMachineModel;
-        this.vendingMachineModel.subscribe('changeCashInfo', this.updateProductHighlight.bind(this));
+        this.vendingMachineModel.subscribe('updateCashInfo', this.updateProductHighlight.bind(this));
         this.vendingMachineModel.subscribe('init', this.render.bind(this));
     }
 

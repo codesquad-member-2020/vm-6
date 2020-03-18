@@ -6,11 +6,12 @@ const OPTION = {
 }
 
 class VendingMachineModel extends Observable {
-    constructor() {
+    constructor(changeModel) {
         super();
         this.productData = null;
         this.insertedCash = 0;
         this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
+        this.changeModel = changeModel;
         this.init();
     }
 
@@ -27,7 +28,7 @@ class VendingMachineModel extends Observable {
     sumInsertedCash(cashUnit, cashCount) {
         if (cashCount === 0) return;
         this.insertedCash += cashUnit;
-        this.notify('changeCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
+        this.notify('updateCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
     }
 
     addSelectedProductIndex(selectedIndex) {
@@ -72,8 +73,16 @@ class VendingMachineModel extends Observable {
             return;
         }
         this.insertedCash -= productInfo.price;
+
+        if (this.insertedCash !== 0) {
+            this.changeModel.change(this.insertedCash);
+            this.notify('changeCash', this.insertedCash);
+            this.insertedCash = 0;
+        }
+
         this.notify('purchaseProduct', { insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
-        this.notify('changeCashInfo', { bLogRender: false });
+        this.notify('updateCashInfo', { bLogUpdate: false });
+
     }
 }
 

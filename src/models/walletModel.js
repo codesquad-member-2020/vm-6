@@ -28,12 +28,12 @@ class WalletModel extends Observable {
         });
     }
 
-    decreaseCashCount(cashUnit, cashCountEl) {
+    decreaseCashCount(cashUnit) {
         let curCount = this.cash.get(cashUnit);
         if (curCount <= 0) return;
         this.cash.set(cashUnit, --curCount);
         this.cashTotal -= cashUnit;
-        this.notify('changeCashInfo', this.cash.get(cashUnit), cashCountEl, this.cashTotal);
+        this.notify('updateCashInfo', this.cash.get(cashUnit), this.cashTotal);
     }
 }
 
