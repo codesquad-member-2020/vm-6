@@ -10,7 +10,7 @@ import ChangeModel from './src/models/changeModel.js';
     const changeModel = new ChangeModel(walletModel);
     const vendingMachineModel = new VendingMachineModel(changeModel);
 
-    new WalletView(walletModel, vendingMachineModel);
+    new WalletView(walletModel, vendingMachineModel, changeModel);
     new ProductSelectView(vendingMachineModel);
     new ProductView(vendingMachineModel);
 })();

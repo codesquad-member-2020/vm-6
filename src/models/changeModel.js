@@ -5,6 +5,7 @@ class ChangeModel extends Observable {
         super();
         this.walletModel = walletModel;
         this.changeCash = 0;
+        this.changeDelay = null;
     }
 
     change(insertedCash) {

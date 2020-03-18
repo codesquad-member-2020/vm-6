@@ -52,7 +52,7 @@ class VendingMachineModel extends Observable {
         this.notifySelectedProduct();
     }
 
-    searchProduct() {
+    findProductInfo() {
         return {
             name: this.productData[parseInt(this.selectedProductIndex) - 1].name,
             price: this.productData[parseInt(this.selectedProductIndex) - 1].price
@@ -61,7 +61,7 @@ class VendingMachineModel extends Observable {
 
     notifySelectedProduct() {
         if (parseInt(this.selectedProductIndex) === 0) return;
-        const productInfo = this.searchProduct();
+        const productInfo = this.findProductInfo();
         this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
         this.notify('selectProduct', this.selectedProductIndex);
         this.purchase(productInfo);
@@ -73,16 +73,16 @@ class VendingMachineModel extends Observable {
             return;
         }
         this.insertedCash -= productInfo.price;
-
-        if (this.insertedCash !== 0) {
-            this.changeModel.change(this.insertedCash);
-            this.notify('changeCash', this.insertedCash);
-            this.insertedCash = 0;
-        }
-
         this.notify('purchaseProduct', { insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
         this.notify('updateCashInfo', { bLogUpdate: false });
+    }
 
+    test() {
+        if (!this.insertedCash) return;
+        this.changeModel.change(this.insertedCash);
+        this.notify('changeCash', this.insertedCash);
+        this.insertedCash = 0;
+        this.notify('updateCashInfo', { bLogUpdate: false });
     }
 }
 

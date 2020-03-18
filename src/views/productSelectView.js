@@ -65,11 +65,15 @@ class ProductSelectView {
         else {
             this.insertedCash.innerHTML = insertedCash;
             this.productSelectLog.appendChild(this.makeLog(`< ${product} > 덜컹 ~`));
+
+            clearTimeout(this.vendingMachineModel.changeModel.changeDelay);
+            this.vendingMachineModel.changeModel.changeDelay = setTimeout(this.vendingMachineModel.test.bind(this.vendingMachineModel), 5000);
         }
         this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
     }
 
-    updateChangeCash(changeCash) {
+    updateChangeCash(changeCash, insertedCash = 0) {
+        this.insertedCash.innerHTML = insertedCash;
         this.productSelectLog.appendChild(this.makeLog(`${changeCash}원 반환 되었습니다.`));
         this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
     }
