@@ -68,9 +68,14 @@ class VendingMachineModel extends Observable {
     }
 
     notifySelectedProduct() {
+        if (parseInt(this.selectedProductIndex) === 0) return;
         const productInfo = this.searchProduct();
         this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
         this.notify('selectProduct', this.selectedProductIndex);
+        this.purchase(productInfo);
+    }
+
+    purchase(productInfo) {
         if (productInfo.price > this.insertedCash) {
             this.notify('purchaseProduct', { bCashNotEnough: true });
             return;
