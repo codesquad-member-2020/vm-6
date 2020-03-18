@@ -4,7 +4,7 @@ import URL from '../util/url.js';
 class WalletModel extends Observable {
     constructor() {
         super();
-        this.walletData = null
+        this.walletData = null;
         this.cash = new Map();
         this.cashTotal = 0;
         this.init();
@@ -28,13 +28,12 @@ class WalletModel extends Observable {
         });
     }
 
-    decreaseCashCount({ target }) {
-        if (target.tagName !== 'BUTTON') return;
-        let curCount = this.cash.get(parseInt(target.value));
+    decreaseCashCount(cashUnit, cashCountEl) {
+        let curCount = this.cash.get(cashUnit);
         if (curCount <= 0) return;
-        this.cash.set(parseInt(target.value), --curCount);
-        this.cashTotal -= target.value;
-        this.notify('changeCashInfo', this.cash.get(parseInt(target.value)), target.nextElementSibling, this.cashTotal);
+        this.cash.set(cashUnit, --curCount);
+        this.cashTotal -= cashUnit;
+        this.notify('changeCashInfo', this.cash.get(cashUnit), cashCountEl, this.cashTotal);
     }
 }
 

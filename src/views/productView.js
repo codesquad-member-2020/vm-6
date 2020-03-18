@@ -16,8 +16,11 @@ class ProductView {
         productList.addEventListener('click', this.productListHandler.bind(this));
     }
 
-    productListHandler(evt) {
-        this.vendingMachineModel.selectProduct(evt);
+    productListHandler({ target }) {
+        if (target.tagName === 'SPAN') target = target.parentElement;
+        if (target.tagName !== 'LI') return;
+        const selectedProductIndex = parseInt(target.children[OPTION.PRODUCT_INDEX].innerText);
+        this.vendingMachineModel.selectProduct(selectedProductIndex);
     }
 
     updateProductHighlight() {

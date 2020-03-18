@@ -29,11 +29,10 @@ class VendingMachineModel extends Observable {
         this.notify('init', this.productData);
     }
 
-    sumInsertedCash({ target }) {
-        if (target.tagName !== 'BUTTON') return;
-        if (parseInt(target.nextElementSibling.innerText) === 0) return;
-        this.insertedCash += parseInt(target.value);
-        this.notify('changeCashInfo', { insertedCash: this.insertedCash, cash: target.value });
+    sumInsertedCash(cashUnit, cashCount) {
+        if (cashCount === 0) return;
+        this.insertedCash += cashUnit;
+        this.notify('changeCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
     }
 
     addSelectedProductIndex({ target }) {
@@ -57,10 +56,8 @@ class VendingMachineModel extends Observable {
         }
     }
 
-    selectProduct({ target }) {
-        if (target.tagName === 'SPAN') target = target.parentElement;
-        if (target.tagName !== 'LI') return;
-        this.selectedProductIndex = parseInt(target.children[OPTION.PRODUCT_INDEX].innerText);
+    selectProduct(selectedProductIndex) {
+        this.selectedProductIndex = selectedProductIndex;
         this.notifySelectedProduct();
     }
 
