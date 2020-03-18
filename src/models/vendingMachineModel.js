@@ -36,24 +36,19 @@ class VendingMachineModel extends Observable {
     }
 
     addSelectedProductIndex({ target }) {
-        if (target.tagName !== 'BUTTON') return;
         if (this.selectedProductIndex + target.value > OPTION.PRODUCT_LIST_LENGTH) return;
-        switch (target.value) {
-            case 'reset': {
-                this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
-                this.notify('selectProduct', this.selectedProductIndex);
-            }
-                break;
-            case 'choice': {
-                if (this.selectedProductIndex === OPTION.DEFAULT_PRODUCT_INDEX) return;
-                this.notifySelectedProduct();
-            }
-                break;
-            default: {
-                this.selectedProductIndex += target.value;
-                this.notify('selectProduct', this.selectedProductIndex);
-            };
-        }
+        this.selectedProductIndex += target.value;
+        this.notify('selectProduct', this.selectedProductIndex);
+    }
+
+    selectResetBtn() {
+        this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
+        this.notify('selectProduct', this.selectedProductIndex);
+    }
+
+    selectChoiceBtn() {
+        if (this.selectedProductIndex === OPTION.DEFAULT_PRODUCT_INDEX) return;
+        this.notifySelectedProduct();
     }
 
     selectProduct(selectedProductIndex) {
@@ -70,9 +65,14 @@ class VendingMachineModel extends Observable {
     }
 
     notifySelectedProduct() {
+        if (parseInt(this.selectedProductIndex) === 0) return;
         const productInfo = this.searchProduct();
         this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
         this.notify('selectProduct', this.selectedProductIndex);
+        this.purchase(productInfo);
+    }
+
+    purchase(productInfo) {
         if (productInfo.price > this.insertedCash) {
             this.notify('purchaseProduct', { bCashNotEnough: true });
             return;

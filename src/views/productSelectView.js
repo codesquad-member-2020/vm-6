@@ -1,4 +1,4 @@
-import { getElement } from '../util/util.js';
+import { getElement, getElements } from '../util/util.js';
 import { productSelectPanel } from '../util/template.js';
 
 class ProductSelectView {
@@ -16,12 +16,28 @@ class ProductSelectView {
         const productSelectWrap = getElement('.product-select-wrap');
         productSelectWrap.innerHTML = productSelectPanel();
 
-        const productSelectBtns = getElement('.product-select-btns');
-        productSelectBtns.addEventListener('click', this.productSelectBtnsHandler.bind(this));
+        const productSelectBtns = getElements('.number-btn');
+        productSelectBtns.forEach(numberBtn => {
+            numberBtn.addEventListener('click', this.productSelectBtnsHandler.bind(this));
+        });
+
+        const resetBtn = getElement('.reset-btn');
+        resetBtn.addEventListener('click', this.resetBtnHandler.bind(this));
+
+        const choiceBtn = getElement('.choice-btn');
+        choiceBtn.addEventListener('click', this.choiceBtnHandler.bind(this));
     }
 
     productSelectBtnsHandler(evt) {
         this.vendingMachineModel.addSelectedProductIndex(evt);
+    }
+
+    resetBtnHandler(evt) {
+        this.vendingMachineModel.selectResetBtn(evt);
+    }
+
+    choiceBtnHandler(evt) {
+        this.vendingMachineModel.selectChoiceBtn(evt);
     }
 
     makeLog(log) {
