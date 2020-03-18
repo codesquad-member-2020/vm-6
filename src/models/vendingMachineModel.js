@@ -6,11 +6,12 @@ const OPTION = {
 }
 
 class VendingMachineModel extends Observable {
-    constructor() {
+    constructor(changeModel) {
         super();
         this.productData = null;
         this.insertedCash = 0;
         this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
+        this.changeModel = changeModel;
         this.init();
     }
 
@@ -27,7 +28,7 @@ class VendingMachineModel extends Observable {
     sumInsertedCash(cashUnit, cashCount) {
         if (cashCount === 0) return;
         this.insertedCash += cashUnit;
-        this.notify('changeCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
+        this.notify('updateCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
     }
 
     addSelectedProductIndex(selectedIndex) {
@@ -51,7 +52,7 @@ class VendingMachineModel extends Observable {
         this.notifySelectedProduct();
     }
 
-    searchProduct() {
+    findProductInfo() {
         return {
             name: this.productData[parseInt(this.selectedProductIndex) - 1].name,
             price: this.productData[parseInt(this.selectedProductIndex) - 1].price
@@ -60,7 +61,7 @@ class VendingMachineModel extends Observable {
 
     notifySelectedProduct() {
         if (parseInt(this.selectedProductIndex) === 0) return;
-        const productInfo = this.searchProduct();
+        const productInfo = this.findProductInfo();
         this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
         this.notify('selectProduct', this.selectedProductIndex);
         this.purchase(productInfo);
@@ -73,7 +74,15 @@ class VendingMachineModel extends Observable {
         }
         this.insertedCash -= productInfo.price;
         this.notify('purchaseProduct', { insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
-        this.notify('changeCashInfo', { bLogRender: false });
+        this.notify('updateCashInfo', { bLogUpdate: false });
+    }
+
+    notifyAddChange() {
+        if (!this.insertedCash) return;
+        this.changeModel.addChange(this.insertedCash);
+        this.notify('changeCash', this.insertedCash);
+        this.insertedCash = 0;
+        this.notify('updateCashInfo', { bLogUpdate: false });
     }
 }
 

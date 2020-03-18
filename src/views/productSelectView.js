@@ -7,9 +7,10 @@ class ProductSelectView {
         this.insertedCash = getElement('.inserted-cash');
         this.productSelectLog = getElement('.product-select-log');
         this.vendingMachineModel = vendingMachineModel;
-        this.vendingMachineModel.subscribe('changeCashInfo', this.updateInsertedCash.bind(this));
+        this.vendingMachineModel.subscribe('updateCashInfo', this.updateInsertedCash.bind(this));
         this.vendingMachineModel.subscribe('selectProduct', this.updateSelectIndex.bind(this));
         this.vendingMachineModel.subscribe('purchaseProduct', this.updateSelectProduct.bind(this));
+        this.vendingMachineModel.subscribe('changeCash', this.updateChangeCash.bind(this));
     }
 
     render() {
@@ -47,8 +48,8 @@ class ProductSelectView {
         return logElement;
     }
 
-    updateInsertedCash({ bLogRender = true, insertedCash, cash }) {
-        if (!bLogRender) return;
+    updateInsertedCash({ bLogUpdate = true, insertedCash, cash }) {
+        if (!bLogUpdate) return;
         this.insertedCash.innerHTML = insertedCash;
         this.productSelectLog.appendChild(this.makeLog(`${cash}원 투입 됐습니다.`));
         this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
@@ -64,7 +65,16 @@ class ProductSelectView {
         else {
             this.insertedCash.innerHTML = insertedCash;
             this.productSelectLog.appendChild(this.makeLog(`< ${product} > 덜컹 ~`));
+
+            clearTimeout(this.vendingMachineModel.changeModel.changeDelay);
+            this.vendingMachineModel.changeModel.changeDelay = setTimeout(this.vendingMachineModel.notifyAddChange.bind(this.vendingMachineModel), 5000);
         }
+        this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
+    }
+
+    updateChangeCash(changeCash, insertedCash = 0) {
+        this.insertedCash.innerHTML = insertedCash;
+        this.productSelectLog.appendChild(this.makeLog(`${changeCash}원 반환 되었습니다.`));
         this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
     }
 }
