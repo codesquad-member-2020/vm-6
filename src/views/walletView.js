@@ -17,9 +17,12 @@ class WalletView {
         walletBtns.addEventListener('click', this.walletBtnsHandler.bind(this));
     }
 
-    walletBtnsHandler(evt) {
-        this.vendingMachineModel.sumInsertedCash(evt);
-        this.walletModel.decreaseCashCount(evt);
+    walletBtnsHandler({ target }) {
+        if (target.tagName !== 'BUTTON') return;
+        const cashUnit = parseInt(target.value);
+        const cashCountEl = target.nextElementSibling;
+        this.vendingMachineModel.sumInsertedCash(cashUnit, parseInt(cashCountEl.innerText));
+        this.walletModel.decreaseCashCount(cashUnit, cashCountEl);
     }
 
     cashInfoUpdate(data, target, cash_total) {

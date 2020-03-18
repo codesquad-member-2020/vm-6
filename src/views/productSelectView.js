@@ -28,16 +28,17 @@ class ProductSelectView {
         choiceBtn.addEventListener('click', this.choiceBtnHandler.bind(this));
     }
 
-    productSelectBtnsHandler(evt) {
-        this.vendingMachineModel.addSelectedProductIndex(evt);
+    productSelectBtnsHandler({ target }) {
+        const selectedIndex = target.value;
+        this.vendingMachineModel.addSelectedProductIndex(selectedIndex);
     }
 
-    resetBtnHandler(evt) {
-        this.vendingMachineModel.selectResetBtn(evt);
+    resetBtnHandler() {
+        this.vendingMachineModel.selectResetBtn();
     }
 
-    choiceBtnHandler(evt) {
-        this.vendingMachineModel.selectChoiceBtn(evt);
+    choiceBtnHandler() {
+        this.vendingMachineModel.selectChoiceBtn();
     }
 
     makeLog(log) {

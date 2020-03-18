@@ -1,12 +1,7 @@
 import Observable from '../util/observable.js';
-import { getElements } from '../util/util.js';
 import URL from '../util/url.js';
 
 const OPTION = {
-    PRODUCT_LIST_LENGTH: 20,
-    PRODUCT_INDEX: 0,
-    PRODUCT_NAME_INDEX: 1,
-    PRODUCT_PRICE_INDEX: 2,
     DEFAULT_PRODUCT_INDEX: '0'
 }
 
@@ -29,16 +24,15 @@ class VendingMachineModel extends Observable {
         this.notify('init', this.productData);
     }
 
-    sumInsertedCash({ target }) {
-        if (target.tagName !== 'BUTTON') return;
-        if (parseInt(target.nextElementSibling.innerText) === 0) return;
-        this.insertedCash += parseInt(target.value);
-        this.notify('changeCashInfo', { insertedCash: this.insertedCash, cash: target.value });
+    sumInsertedCash(cashUnit, cashCount) {
+        if (cashCount === 0) return;
+        this.insertedCash += cashUnit;
+        this.notify('changeCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
     }
 
-    addSelectedProductIndex({ target }) {
-        if (this.selectedProductIndex + target.value > OPTION.PRODUCT_LIST_LENGTH) return;
-        this.selectedProductIndex += target.value;
+    addSelectedProductIndex(selectedIndex) {
+        if (this.selectedProductIndex + selectedIndex > this.productData.length) return;
+        this.selectedProductIndex += selectedIndex;
         this.notify('selectProduct', this.selectedProductIndex);
     }
 
@@ -52,18 +46,15 @@ class VendingMachineModel extends Observable {
         this.notifySelectedProduct();
     }
 
-    selectProduct({ target }) {
-        if (target.tagName === 'SPAN') target = target.parentElement;
-        if (target.tagName !== 'LI') return;
-        this.selectedProductIndex = parseInt(target.children[OPTION.PRODUCT_INDEX].innerText);
+    selectProduct(selectedProductIndex) {
+        this.selectedProductIndex = selectedProductIndex;
         this.notifySelectedProduct();
     }
 
     searchProduct() {
-        const productList = getElements('.product-list li');
         return {
-            name: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_NAME_INDEX].innerText,
-            price: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_PRICE_INDEX].innerText
+            name: this.productData[parseInt(this.selectedProductIndex) - 1].name,
+            price: this.productData[parseInt(this.selectedProductIndex) - 1].price
         }
     }
 
