@@ -1,12 +1,7 @@
 import Observable from '../util/observable.js';
-import { getElements } from '../util/util.js';
 import URL from '../util/url.js';
 
 const OPTION = {
-    PRODUCT_LIST_LENGTH: 20,
-    PRODUCT_INDEX: 0,
-    PRODUCT_NAME_INDEX: 1,
-    PRODUCT_PRICE_INDEX: 2,
     DEFAULT_PRODUCT_INDEX: '0'
 }
 
@@ -35,9 +30,9 @@ class VendingMachineModel extends Observable {
         this.notify('changeCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
     }
 
-    addSelectedProductIndex({ target }) {
-        if (this.selectedProductIndex + target.value > OPTION.PRODUCT_LIST_LENGTH) return;
-        this.selectedProductIndex += target.value;
+    addSelectedProductIndex(selectedIndex) {
+        if (this.selectedProductIndex + selectedIndex > this.productData.length) return;
+        this.selectedProductIndex += selectedIndex;
         this.notify('selectProduct', this.selectedProductIndex);
     }
 
@@ -57,10 +52,9 @@ class VendingMachineModel extends Observable {
     }
 
     searchProduct() {
-        const productList = getElements('.product-list li');
         return {
-            name: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_NAME_INDEX].innerText,
-            price: productList[parseInt(this.selectedProductIndex) - 1].children[OPTION.PRODUCT_PRICE_INDEX].innerText
+            name: this.productData[parseInt(this.selectedProductIndex) - 1].name,
+            price: this.productData[parseInt(this.selectedProductIndex) - 1].price
         }
     }
 
