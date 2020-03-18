@@ -8,7 +8,7 @@ class ChangeModel extends Observable {
         this.changeDelay = null;
     }
 
-    change(insertedCash) {
+    addChange(insertedCash) {
         this.changeCash = insertedCash;
         this.walletModel.cashTotal += this.changeCash;
 

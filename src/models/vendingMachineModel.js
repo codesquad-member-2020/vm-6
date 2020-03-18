@@ -77,9 +77,9 @@ class VendingMachineModel extends Observable {
         this.notify('updateCashInfo', { bLogUpdate: false });
     }
 
-    test() {
+    notifyAddChange() {
         if (!this.insertedCash) return;
-        this.changeModel.change(this.insertedCash);
+        this.changeModel.addChange(this.insertedCash);
         this.notify('changeCash', this.insertedCash);
         this.insertedCash = 0;
         this.notify('updateCashInfo', { bLogUpdate: false });

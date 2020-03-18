@@ -67,7 +67,7 @@ class ProductSelectView {
             this.productSelectLog.appendChild(this.makeLog(`< ${product} > 덜컹 ~`));
 
             clearTimeout(this.vendingMachineModel.changeModel.changeDelay);
-            this.vendingMachineModel.changeModel.changeDelay = setTimeout(this.vendingMachineModel.test.bind(this.vendingMachineModel), 5000);
+            this.vendingMachineModel.changeModel.changeDelay = setTimeout(this.vendingMachineModel.notifyAddChange.bind(this.vendingMachineModel), 5000);
         }
         this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
     }

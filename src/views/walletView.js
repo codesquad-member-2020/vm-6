@@ -28,7 +28,7 @@ class WalletView {
         this.walletModel.decreaseCashCount(cashUnit);
 
         clearTimeout(this.changeModel.changeDelay);
-        this.changeModel.changeDelay = setTimeout(this.vendingMachineModel.test.bind(this.vendingMachineModel), 5000);
+        this.changeModel.changeDelay = setTimeout(this.vendingMachineModel.notifyAddChange.bind(this.vendingMachineModel), 5000);
     }
 
     cashInfoUpdate(cashCount, cashTotal) {
