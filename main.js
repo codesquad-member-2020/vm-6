@@ -10,6 +10,6 @@ const walletModel = new WalletModel();
 const changeModel = new ChangeModel(walletModel);
 const vendingMachineModel = new VendingMachineModel(changeModel);
 
-new WalletView(walletModel, vendingMachineModel, changeModel);
+new WalletView(walletModel, vendingMachineModel);
 new ProductSelectView(vendingMachineModel);
 new ProductView(vendingMachineModel);

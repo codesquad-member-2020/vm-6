@@ -2,10 +2,9 @@ import { getElement } from '../util/domUtil.js';
 import { walletPanel } from '../util/template.js';
 
 class WalletView {
-    constructor(walletModel, vendingMachineModel, changeModel) {
+    constructor(walletModel, vendingMachineModel) {
         this.walletModel = walletModel;
         this.vendingMachineModel = vendingMachineModel;
-        this.changeModel = changeModel;
         this.walletModel.subscribe('UPDATE_CASH_INFO', this.cashInfoUpdate.bind(this));
         this.walletModel.subscribe('CHANGE_CASH', this.searchCashCountEl.bind(this));
         this.walletModel.subscribe('INIT', this.render.bind(this));
@@ -27,8 +26,8 @@ class WalletView {
         this.vendingMachineModel.sumInsertedCash(cashUnit, parseInt(this.cashCountEl.innerText));
         this.walletModel.decreaseCashCount(cashUnit);
 
-        clearTimeout(this.changeModel.changeDelay);
-        this.changeModel.changeDelay = setTimeout(this.vendingMachineModel.notifyAddChange.bind(this.vendingMachineModel), 5000);
+        clearTimeout(this.vendingMachineModel.changeModel.changeDelay);
+        this.vendingMachineModel.changeModel.changeDelay = setTimeout(this.vendingMachineModel.notifyAddChange.bind(this.vendingMachineModel), 5000);
     }
 
     cashInfoUpdate(cashCount, cashTotal) {

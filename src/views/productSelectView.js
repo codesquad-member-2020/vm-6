@@ -51,7 +51,7 @@ class ProductSelectView {
     updateInsertedCash({ bLogUpdate = true, insertedCash, cash }) {
         if (!bLogUpdate) return;
         this.insertedCash.innerHTML = insertedCash;
-        this.productSelectLog.appendChild(this.makeLog(`${cash}원 투입 됐습니다.`));
+        this.productSelectLog.appendChild(this.makeLog(`${cash}원 투입 되었습니다.`));
         this.productSelectLog.scrollTop = this.productSelectLog.scrollHeight;
     }
 
@@ -61,10 +61,10 @@ class ProductSelectView {
     }
 
     updateSelectProduct({ bCashNotEnough = false, insertedCash, product }) {
-        if (bCashNotEnough) this.productSelectLog.appendChild(this.makeLog(`잔액이 부족 합니다.`));
+        if (bCashNotEnough) this.productSelectLog.appendChild(this.makeLog(`<span style="color: #994545">잔액이 부족 합니다.</span>`));
         else {
             this.insertedCash.innerHTML = insertedCash;
-            this.productSelectLog.appendChild(this.makeLog(`< ${product} > 덜컹 ~`));
+            this.productSelectLog.appendChild(this.makeLog(`　${product.emoji} ${product.name}　덜컹 ~`));
 
             clearTimeout(this.vendingMachineModel.changeModel.changeDelay);
             this.vendingMachineModel.changeModel.changeDelay = setTimeout(this.vendingMachineModel.notifyAddChange.bind(this.vendingMachineModel), 5000);

@@ -2,7 +2,7 @@ export function productPanel(data) {
     const productList = data.reduce((list, product) => {
         list += `<li class='product'>
                     <span class='product-index product-info'>${product.index}</span>
-                    <span class='product-name product-info'>${product.name}</span>
+                    <span class='product-emoji product-info'>${product.emoji}</span>
                     <span class='product-price product-info'>${product.price}</span>
                 </li>`
         return list;

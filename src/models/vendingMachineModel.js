@@ -54,6 +54,7 @@ class VendingMachineModel extends Observable {
 
     findProductInfo() {
         return {
+            emoji: this.productData[parseInt(this.selectedProductIndex) - 1].emoji,
             name: this.productData[parseInt(this.selectedProductIndex) - 1].name,
             price: this.productData[parseInt(this.selectedProductIndex) - 1].price
         }
@@ -73,7 +74,7 @@ class VendingMachineModel extends Observable {
             return;
         }
         this.insertedCash -= productInfo.price;
-        this.notify('PURCHASE_PRODUCT', { insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
+        this.notify('PURCHASE_PRODUCT', { insertedCash: this.insertedCash, product: { emoji: productInfo.emoji, name: productInfo.name }, index: this.selectedProductIndex });
         this.notify('UPDATE_CASH_INFO', { bLogUpdate: false });
     }
 
