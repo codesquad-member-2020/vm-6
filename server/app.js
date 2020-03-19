@@ -1,8 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const productJSON = require('../src/json/product.json');
-const walletJSON = require('../src/json/wallet.json');
+const productJSON = require('../src/data/product.json');
+const walletJSON = require('../src/data/wallet.json');
 
 app.use(cors());
 app.use(express.json());

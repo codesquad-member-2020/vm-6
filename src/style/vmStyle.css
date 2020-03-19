@@ -1,12 +1,34 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 .wrap {
     display: flex;
+    font-family: Roboto Condensed, sans-serif;
+    width: 1093px;
+    margin: auto;
+    margin-top: 70px;
+    border: 3px solid #999;
+    border-radius: 12px;
+    background-color: #e6e3e3;
+    font-weight: bold;
+}
+
+button {
+    background-color: #FFFFFF;
+    border: 2px solid #999;
+    font-weight: bold;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
+button:hover {
+    color: #FFFFFF;
+    background-color: #999;
+    cursor: pointer;
 }
 
 .product-wrap {
     padding-left: 10px;
     width: 452px;
     height: 550px;
-    border: 1px #000 solid;
     overflow: auto;
     box-sizing: border-box;
 }
@@ -25,19 +47,25 @@
     justify-content: center;
     align-items: center;
     margin: 10px 10px 35px 0;
-    border: 1px #000 solid;
-    box-sizing: border-box;
     cursor: pointer;
 }
 
-.product-list>li.on {
-    border: 1.5px #f00 solid;
+.product-list>li.on>.product-emoji {
+    text-shadow: 1px 1px 1px #a9a9a9, 0 0 20px #f00, 0 0 3px #994545;
+}
+
+.product-emoji {
+    transition: all 0.4s ease;
+    text-shadow: none;
+    font-size: 35px;
 }
 
 .product-index {
     position: absolute;
-    left: 1px;
-    top: 1px;
+    left: 5px;
+    top: 2px;
+    color: #999;
+    font-size: 14px;
 }
 
 .product-price {
@@ -50,8 +78,8 @@
 .product-select-wrap {
     width: 441px;
     height: 550px;
-    border: 1px #000 solid;
-    border-left: none;
+    border-left: 3px #999 solid;
+    border-right: 3px #999 solid;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -69,17 +97,19 @@
 .selected-product-index-wrap {
     margin-right: 10px;
     width: 100px;
-    border: 1px #000 solid;
+    border: 2px #999 solid;
     text-align: right;
     box-sizing: border-box;
     text-align: center;
+    background-color: #fff;
 }
 
 .inserted-cash-wrap {
     width: 260px;
-    border: 1px #000 solid;
+    border: 2px #999 solid;
     text-align: right;
     box-sizing: border-box;
+    background-color: #fff;
 }
 
 .cash-unit {
@@ -97,6 +127,7 @@
 }
 
 .product-select-btns>button {
+    font-size: 15px;
     width: 100px;
     height: 40px;
 }
@@ -104,18 +135,29 @@
 .product-select-log {
     width: 370px;
     height: 250px;
-    border: 1px #000 solid;
+    border: 2px #999 solid;
     padding: 10px;
     box-sizing: border-box;
     line-height: 20px;
     overflow: auto;
+    background-color: #fff;
+}
+
+.product-select-log::-webkit-scrollbar {
+    width: 10px;
+}
+
+.product-select-log::-webkit-scrollbar-thumb {
+    background-color: #2F3542;
+}
+
+.product-select-log::-webkit-scrollbar-track {
+    background-color: #999;
 }
 
 .wallet-wrap {
     width: 200px;
     height: 550px;
-    border: 1px #000 solid;
-    border-left: none;
     box-sizing: border-box;
     padding: 0 20px;
     display: flex;
@@ -135,4 +177,5 @@
 .wallet-btns button {
     width: 80px;
     height: 35px;
+    margin-right: 10px;
 }

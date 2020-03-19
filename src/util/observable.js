@@ -1,11 +1,11 @@
 class Observable {
     constructor() {
         this._observers = {
-            'init': new Set(),
-            'updateCashInfo': new Set(),
-            'selectProduct': new Set(),
-            'purchaseProduct': new Set(),
-            'changeCash': new Set()
+            'INIT': new Set(),
+            'UPDATE_CASH_INFO': new Set(),
+            'SELECT_PRODUCT': new Set(),
+            'PURCHASE_PRODUCT': new Set(),
+            'CHANGE_CASH': new Set()
         };
     }
 

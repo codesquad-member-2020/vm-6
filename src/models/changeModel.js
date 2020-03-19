@@ -1,8 +1,5 @@
-import Observable from '../util/observable.js';
-
-class ChangeModel extends Observable {
+class ChangeModel {
     constructor(walletModel) {
-        super();
         this.walletModel = walletModel;
         this.changeCash = 0;
         this.changeDelay = null;
@@ -18,8 +15,8 @@ class ChangeModel extends Observable {
             this.walletModel.cash.set(cashUnit, cashCount + cashUnitCount);
             this.changeCash %= cashUnit;
             if (!cashUnitCount) return;
-            this.walletModel.notify('changeCash', cashUnit);
-            this.walletModel.notify('updateCashInfo', cashCount + cashUnitCount, this.walletModel.cashTotal);
+            this.walletModel.notify('CHANGE_CASH', cashUnit);
+            this.walletModel.notify('UPDATE_CASH_INFO', cashCount + cashUnitCount, this.walletModel.cashTotal);
         });
     }
 }

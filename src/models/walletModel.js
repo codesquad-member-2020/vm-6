@@ -1,5 +1,5 @@
 import Observable from '../util/observable.js';
-import URL from '../util/url.js';
+import URL from '../data/url.js';
 
 class WalletModel extends Observable {
     constructor() {
@@ -18,7 +18,7 @@ class WalletModel extends Observable {
         const response = await fetch(url);
         this.walletData = await response.json();
         this.setCashInfo(this.walletData);
-        this.notify('init', this.walletData);
+        this.notify('INIT', this.walletData);
     }
 
     setCashInfo(data) {
@@ -33,7 +33,7 @@ class WalletModel extends Observable {
         if (curCount <= 0) return;
         this.cash.set(cashUnit, --curCount);
         this.cashTotal -= cashUnit;
-        this.notify('updateCashInfo', this.cash.get(cashUnit), this.cashTotal);
+        this.notify('UPDATE_CASH_INFO', this.cash.get(cashUnit), this.cashTotal);
     }
 }
 

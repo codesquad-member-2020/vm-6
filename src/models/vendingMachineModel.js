@@ -1,8 +1,8 @@
 import Observable from '../util/observable.js';
-import URL from '../util/url.js';
+import URL from '../data/url.js';
 
-const OPTION = {
-    DEFAULT_PRODUCT_INDEX: '0'
+const DEFAULT = {
+    PRODUCT_INDEX: '0'
 }
 
 class VendingMachineModel extends Observable {
@@ -10,7 +10,7 @@ class VendingMachineModel extends Observable {
         super();
         this.productData = null;
         this.insertedCash = 0;
-        this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
+        this.selectedProductIndex = DEFAULT.PRODUCT_INDEX;
         this.changeModel = changeModel;
         this.init();
     }
@@ -22,28 +22,28 @@ class VendingMachineModel extends Observable {
     async getData(url) {
         const response = await fetch(url);
         this.productData = await response.json();
-        this.notify('init', this.productData);
+        this.notify('INIT', this.productData);
     }
 
     sumInsertedCash(cashUnit, cashCount) {
         if (cashCount === 0) return;
         this.insertedCash += cashUnit;
-        this.notify('updateCashInfo', { insertedCash: this.insertedCash, cash: cashUnit });
+        this.notify('UPDATE_CASH_INFO', { insertedCash: this.insertedCash, cash: cashUnit });
     }
 
     addSelectedProductIndex(selectedIndex) {
         if (this.selectedProductIndex + selectedIndex > this.productData.length) return;
         this.selectedProductIndex += selectedIndex;
-        this.notify('selectProduct', this.selectedProductIndex);
+        this.notify('SELECT_PRODUCT', this.selectedProductIndex);
     }
 
     selectResetBtn() {
-        this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
-        this.notify('selectProduct', this.selectedProductIndex);
+        this.selectedProductIndex = DEFAULT.PRODUCT_INDEX;
+        this.notify('SELECT_PRODUCT', this.selectedProductIndex);
     }
 
     selectChoiceBtn() {
-        if (this.selectedProductIndex === OPTION.DEFAULT_PRODUCT_INDEX) return;
+        if (this.selectedProductIndex === DEFAULT.PRODUCT_INDEX) return;
         this.notifySelectedProduct();
     }
 
@@ -54,6 +54,7 @@ class VendingMachineModel extends Observable {
 
     findProductInfo() {
         return {
+            emoji: this.productData[parseInt(this.selectedProductIndex) - 1].emoji,
             name: this.productData[parseInt(this.selectedProductIndex) - 1].name,
             price: this.productData[parseInt(this.selectedProductIndex) - 1].price
         }
@@ -62,27 +63,27 @@ class VendingMachineModel extends Observable {
     notifySelectedProduct() {
         if (parseInt(this.selectedProductIndex) === 0) return;
         const productInfo = this.findProductInfo();
-        this.selectedProductIndex = OPTION.DEFAULT_PRODUCT_INDEX;
-        this.notify('selectProduct', this.selectedProductIndex);
+        this.selectedProductIndex = DEFAULT.PRODUCT_INDEX;
+        this.notify('SELECT_PRODUCT', this.selectedProductIndex);
         this.purchase(productInfo);
     }
 
     purchase(productInfo) {
         if (productInfo.price > this.insertedCash) {
-            this.notify('purchaseProduct', { bCashNotEnough: true });
+            this.notify('PURCHASE_PRODUCT', { bCashNotEnough: true });
             return;
         }
         this.insertedCash -= productInfo.price;
-        this.notify('purchaseProduct', { insertedCash: this.insertedCash, product: productInfo.name, index: this.selectedProductIndex });
-        this.notify('updateCashInfo', { bLogUpdate: false });
+        this.notify('PURCHASE_PRODUCT', { insertedCash: this.insertedCash, product: { emoji: productInfo.emoji, name: productInfo.name }, index: this.selectedProductIndex });
+        this.notify('UPDATE_CASH_INFO', { bLogUpdate: false });
     }
 
     notifyAddChange() {
         if (!this.insertedCash) return;
         this.changeModel.addChange(this.insertedCash);
-        this.notify('changeCash', this.insertedCash);
+        this.notify('CHANGE_CASH', this.insertedCash);
         this.insertedCash = 0;
-        this.notify('updateCashInfo', { bLogUpdate: false });
+        this.notify('UPDATE_CASH_INFO', { bLogUpdate: false });
     }
 }
 
