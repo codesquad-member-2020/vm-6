@@ -5,12 +5,11 @@ import WalletModel from './src/models/walletModel.js';
 import VendingMachineModel from './src/models/vendingMachineModel.js';
 import ChangeModel from './src/models/changeModel.js';
 
-(function main() {
-    const walletModel = new WalletModel();
-    const changeModel = new ChangeModel(walletModel);
-    const vendingMachineModel = new VendingMachineModel(changeModel);
 
-    new WalletView(walletModel, vendingMachineModel, changeModel);
-    new ProductSelectView(vendingMachineModel);
-    new ProductView(vendingMachineModel);
-})();
+const walletModel = new WalletModel();
+const changeModel = new ChangeModel(walletModel);
+const vendingMachineModel = new VendingMachineModel(changeModel);
+
+new WalletView(walletModel, vendingMachineModel, changeModel);
+new ProductSelectView(vendingMachineModel);
+new ProductView(vendingMachineModel);

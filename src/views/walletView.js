@@ -1,4 +1,4 @@
-import { getElement } from '../util/util.js';
+import { getElement } from '../util/domUtil.js';
 import { walletPanel } from '../util/template.js';
 
 class WalletView {
@@ -6,9 +6,9 @@ class WalletView {
         this.walletModel = walletModel;
         this.vendingMachineModel = vendingMachineModel;
         this.changeModel = changeModel;
-        this.walletModel.subscribe('updateCashInfo', this.cashInfoUpdate.bind(this));
-        this.walletModel.subscribe('changeCash', this.searchCashCountEl.bind(this));
-        this.walletModel.subscribe('init', this.render.bind(this));
+        this.walletModel.subscribe('UPDATE_CASH_INFO', this.cashInfoUpdate.bind(this));
+        this.walletModel.subscribe('CHANGE_CASH', this.searchCashCountEl.bind(this));
+        this.walletModel.subscribe('INIT', this.render.bind(this));
         this.cashCountEl = null;
     }
 
@@ -21,7 +21,7 @@ class WalletView {
     }
 
     walletBtnsHandler({ target }) {
-        if (target.tagName !== 'BUTTON') return;
+        if (!target.classList.contains('cash-btn')) return;
         const cashUnit = parseInt(target.value);
         this.cashCountEl = target.nextElementSibling;
         this.vendingMachineModel.sumInsertedCash(cashUnit, parseInt(this.cashCountEl.innerText));

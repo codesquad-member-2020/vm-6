@@ -1,4 +1,4 @@
-import { getElement, getElements } from '../util/util.js';
+import { getElement, getElements } from '../util/domUtil.js';
 import { productSelectPanel } from '../util/template.js';
 
 class ProductSelectView {
@@ -7,10 +7,10 @@ class ProductSelectView {
         this.insertedCash = getElement('.inserted-cash');
         this.productSelectLog = getElement('.product-select-log');
         this.vendingMachineModel = vendingMachineModel;
-        this.vendingMachineModel.subscribe('updateCashInfo', this.updateInsertedCash.bind(this));
-        this.vendingMachineModel.subscribe('selectProduct', this.updateSelectIndex.bind(this));
-        this.vendingMachineModel.subscribe('purchaseProduct', this.updateSelectProduct.bind(this));
-        this.vendingMachineModel.subscribe('changeCash', this.updateChangeCash.bind(this));
+        this.vendingMachineModel.subscribe('UPDATE_CASH_INFO', this.updateInsertedCash.bind(this));
+        this.vendingMachineModel.subscribe('SELECT_PRODUCT', this.updateSelectIndex.bind(this));
+        this.vendingMachineModel.subscribe('PURCHASE_PRODUCT', this.updateSelectProduct.bind(this));
+        this.vendingMachineModel.subscribe('CHANGE_CASH', this.updateChangeCash.bind(this));
     }
 
     render() {

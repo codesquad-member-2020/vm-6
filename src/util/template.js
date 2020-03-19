@@ -1,9 +1,9 @@
 export function productPanel(data) {
     const productList = data.reduce((list, product) => {
-        list += `<li>
-                    <span class='product-index'>${product.index}</span>
-                    <span class='product-name'>${product.name}</span>
-                    <span class='product-price'>${product.price}</span>
+        list += `<li class='product'>
+                    <span class='product-index product-info'>${product.index}</span>
+                    <span class='product-name product-info'>${product.name}</span>
+                    <span class='product-price product-info'>${product.price}</span>
                 </li>`
         return list;
     }, '');
@@ -11,6 +11,18 @@ export function productPanel(data) {
 }
 
 export function productSelectPanel() {
+    const productSelectBtns = [1, 2, 3, 4, 5, 6, 7, 8, 9, '취소', 0, '선택'].map(buttonType => {
+        let className;
+        switch (buttonType) {
+            case '취소': className = 'reset-btn';
+                break;
+            case '선택': className = 'choice-btn';
+                break;
+            default: className = 'number-btn';
+        };
+        return `<button class='${className}' value='${buttonType}'>${buttonType}</button>`
+    }).join('');
+
     return `
         <div class='product-select-info-wrap'>
             <div class='selected-product-index-wrap'>
@@ -24,20 +36,7 @@ export function productSelectPanel() {
         </div>
 
 
-        <div class='product-select-btns'>
-            <button class='number-btn' value='1'>1</button>
-            <button class='number-btn' value='2'>2</button>
-            <button class='number-btn' value='3'>3</button>
-            <button class='number-btn' value='4'>4</button>
-            <button class='number-btn' value='5'>5</button>
-            <button class='number-btn' value='6'>6</button>
-            <button class='number-btn' value='7'>7</button>
-            <button class='number-btn' value='8'>8</button>
-            <button class='number-btn' value='9'>9</button>
-            <button class='reset-btn'>취소</button>
-            <button class='number-btn' value='0'>0</button>
-            <button class='choice-btn'>선택</button>
-        </div>
+        <div class='product-select-btns'>${productSelectBtns}</div>
 
         <ul class='product-select-log'></ul>
             `
@@ -48,7 +47,7 @@ export function walletPanel(data) {
     const walletList = data.reduce((list, cashInfo) => {
         cashTotal += (cashInfo.cashUnit * cashInfo.cashCount);
         list += `<li>
-                    <button value='${cashInfo.cashUnit}'>${cashInfo.cashUnit}원</button>
+                    <button class='cash-btn' value='${cashInfo.cashUnit}'>${cashInfo.cashUnit}원</button>
                     <span class='cash-count'>${cashInfo.cashCount}</span>
                 </li>`
         return list;

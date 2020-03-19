@@ -1,15 +1,11 @@
-import { getElement, getElements, classAdd, classRemove } from '../util/util.js';
+import { getElement, getElements, classAdd, classRemove } from '../util/domUtil.js';
 import { productPanel } from '../util/template.js';
-
-const OPTION = {
-    PRODUCT_INDEX: 0
-}
 
 class ProductView {
     constructor(vendingMachineModel) {
         this.vendingMachineModel = vendingMachineModel;
-        this.vendingMachineModel.subscribe('updateCashInfo', this.updateProductHighlight.bind(this));
-        this.vendingMachineModel.subscribe('init', this.render.bind(this));
+        this.vendingMachineModel.subscribe('UPDATE_CASH_INFO', this.updateProductHighlight.bind(this));
+        this.vendingMachineModel.subscribe('INIT', this.render.bind(this));
     }
 
     render(data) {
@@ -21,9 +17,9 @@ class ProductView {
     }
 
     productListHandler({ target }) {
-        if (target.tagName === 'SPAN') target = target.closest('li');
-        if (target.tagName !== 'LI') return;
-        const selectedProductIndex = parseInt(target.children[OPTION.PRODUCT_INDEX].innerText);
+        if (target.classList.contains('product-info')) target = target.closest('.product');
+        if (!target.classList.contains('product')) return;
+        const selectedProductIndex = parseInt(target.querySelector('.product-index').innerText);
         this.vendingMachineModel.selectProduct(selectedProductIndex);
     }
 
