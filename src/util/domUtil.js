@@ -1,8 +1,8 @@
-export function vm$(target) {
+export function getElement(target) {
     return document.querySelector(target);
 }
 
-export function vm$$(target) {
+export function getElements(target) {
     return document.querySelectorAll(target);
 }
 

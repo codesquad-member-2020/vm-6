@@ -1,0 +1,7 @@
+.vscode
+server/bin
+server/node_modules
+server/public
+server/routes
+server/views
+server/package-lock.json
